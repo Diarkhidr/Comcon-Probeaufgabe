@@ -1,0 +1,19 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Projekte</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    <ion-item *ngFor="let project of projects">
+      <ion-avatar slot="start">
+        <img src="./assets/images/avatar.svg">
+      </ion-avatar>
+      <ion-label>
+        <h2>{{ project.title }}</h2>
+        <p>{{ project.description }}</p>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+</ion-content>

@@ -1,0 +1,45 @@
+<ion-header *ngIf="currentDay">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>{{ currentDay.startDate | date:'dd.MM.yyyy' }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf="currentDay">
+  <div class="header">
+    <div class="current-time">{{ currentDay | duration | date:'HH:mm:ss':'GMT' }}</div>
+  </div>
+  <ion-list class="scroll trackings" inset="true">
+    <ion-item class="start" lines="none">
+      <ion-label>
+        <div class="tracking-header">
+          <h4>Arbeitsbeginn</h4>
+          <p>{{ currentDay.startDate | date:'HH:mm:ss' }}</p>
+        </div>
+      </ion-label>
+    </ion-item>
+    <ion-item *ngFor="let tracking of currentDay.trackings" class="{{tracking.type}}">
+      <ion-label>
+        <div class="tracking-header">
+          <h4>{{ tracking.type === 'project' ? tracking.project.title:'Pause' }}</h4>
+          <p *ngIf="tracking.endDate">{{ tracking.startDate | date:'HH:mm:ss' }} - {{ tracking.endDate | date:'HH:mm:ss' }}</p>
+          <p *ngIf="!tracking.endDate">ab {{ tracking.startDate | date:'HH:mm:ss' }}</p>
+        </div>
+        <div class="tracking-header" *ngIf="tracking.endDate">
+          <p class="comment">{{tracking.comment}}</p>
+          <p>{{ tracking | duration | date:'HH:mm:ss':'GMT' }}</p>
+        </div>
+      </ion-label>
+    </ion-item>
+    <ion-item *ngIf="currentDay.endDate" class="end">
+      <ion-label>
+        <div class="tracking-header">
+          <h4>Arbeitsende</h4>
+          <p>{{ currentDay.endDate | date:'HH:mm:ss' }}</p>
+        </div>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+</ion-content>

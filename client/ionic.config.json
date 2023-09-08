@@ -1,0 +1,9 @@
+{
+  "name": "tiimer",
+  "integrations": {
+    "capacitor": {},
+    "cordova": {}
+  },
+  "type": "angular",
+  "id": "dbdb926c"
+}

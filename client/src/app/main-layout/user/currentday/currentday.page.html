@@ -1,0 +1,75 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Aktueller Arbeitstag</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="main">
+    <div class="content" *ngIf="!trackingService.currentDay">
+      <ion-button (click)="StartDay()">
+        <ion-icon name="play-outline"></ion-icon>
+        <ion-label>
+          Arbeitstag beginnen
+        </ion-label>
+        <ion-ripple-effect></ion-ripple-effect>
+      </ion-button>
+    </div>
+    <div class="content2" *ngIf="trackingService.currentDay">
+      <div class="header">
+        <div class="current-time">{{ currentWorkTime | date:'HH:mm:ss':'GMT' }}</div>
+        <div class="current-project">{{ currentProjectTitle() }}</div>
+        <div class="current-project-time">{{ currentProjectTime | date:'HH:mm:ss':'GMT' }}</div>
+      </div>
+      <div class="buttons">
+        <ion-fab-button (click)="StartTracking()" *ngIf="!trackingService.currentEntry" disabled="{{trackingService.currentDay.endDate ? true:false}}">
+          <ion-icon name="play-outline"></ion-icon>
+        </ion-fab-button>
+        <ion-fab-button (click)="EndTracking()" *ngIf="trackingService.currentEntry" disabled="{{trackingService.currentDay.endDate ? true:false}}">
+          <ion-icon name="pause-outline"></ion-icon>
+        </ion-fab-button>
+        <ion-fab-button (click)="StartPause()" fill="clear" disabled="{{trackingService.currentDay.endDate ? true:false}}">
+          <ion-icon name="cafe-outline"></ion-icon>
+        </ion-fab-button>
+        <ion-fab-button (click)="EndDay()" fill="clear" disabled="{{trackingService.currentDay.endDate ? true:false}}">
+          <ion-icon name="stop-outline"></ion-icon>
+        </ion-fab-button>
+      </div>
+    </div>
+    <ion-label class="upper" *ngIf="trackingService.currentDay">Einträge</ion-label>
+    <ion-list class="scroll trackings" *ngIf="trackingService.currentDay" inset="true">
+      <ion-item class="start" lines="none">
+        <ion-label>
+          <div class="tracking-header">
+            <h4>Arbeitsbeginn</h4>
+            <p>{{ trackingService.currentDay.startDate | date:'HH:mm:ss' }}</p>
+          </div>
+        </ion-label>
+      </ion-item>
+      <ion-item *ngFor="let tracking of trackingService.currentDay.trackings" class="{{tracking.type}}">
+        <ion-label>
+          <div class="tracking-header">
+            <h4>{{ tracking.type === 'project' ? tracking.project.title:'Pause' }}</h4>
+            <p *ngIf="tracking.endDate">{{ tracking.startDate | date:'HH:mm:ss' }} - {{ tracking.endDate | date:'HH:mm:ss' }}</p>
+            <p *ngIf="!tracking.endDate">ab {{ tracking.startDate | date:'HH:mm:ss' }}</p>
+          </div>
+          <div class="tracking-header" *ngIf="tracking.endDate">
+            <p class="comment">{{tracking.comment}}</p>
+            <p>{{ tracking | duration | date:'HH:mm:ss':'GMT' }}</p>
+          </div>
+        </ion-label>
+      </ion-item>
+      <ion-item *ngIf="trackingService.currentDay.endDate" class="end">
+        <ion-label>
+          <div class="tracking-header">
+            <h4>Arbeitsende</h4>
+            <p>{{ trackingService.currentDay.endDate | date:'HH:mm:ss' }}</p>
+          </div>
+        </ion-label>
+      </ion-item>
+    </ion-list>
+  </div>
+</ion-content>

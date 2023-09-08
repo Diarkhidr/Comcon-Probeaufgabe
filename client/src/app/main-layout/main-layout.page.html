@@ -1,0 +1,52 @@
+<ion-split-pane contentId="child-content">
+  <ion-menu contentId="child-content" type="overlay">
+    <ion-content>
+      <ion-list id="inbox-list">
+        <ion-list-header>com:con tiimer</ion-list-header>
+        <ion-item>
+          <ion-avatar slot="start">
+            <img src="./assets/images/avatar.svg">
+          </ion-avatar>
+          <ion-label>
+            <h3>{{ authService.user.userName }}</h3>
+            <p>{{ authService.user.roles.join(', ') }}</p>
+          </ion-label>
+        </ion-item>
+      </ion-list>
+
+      <ion-list id="labels-list" *ngIf="authService.user.roles.indexOf('admin') > -1">
+        <ion-list-header>Administration</ion-list-header>
+
+        <ion-item routerLink="/main/admin/users">
+          <ion-label>Mitarbeiter</ion-label>
+        </ion-item>
+        <ion-item routerLink="/main/admin/projects">
+          <ion-label>Projekte</ion-label>
+        </ion-item>
+        <ion-item routerLink="/main/admin/trackings">
+          <ion-label>Zeiterfassungen</ion-label>
+        </ion-item>
+      </ion-list>
+
+      <ion-list id="labels-list" *ngIf="authService.user.roles.indexOf('employee') > -1">
+        <ion-list-header>Menü</ion-list-header>
+
+        <ion-item routerLink="/main/user/dashboard">
+          <ion-label>Dashboard</ion-label>
+        </ion-item>
+        <ion-item routerLink="/main/user/projects">
+          <ion-label>Meine Projekte</ion-label>
+        </ion-item>
+        <ion-item routerLink="/main/user/trackings">
+          <ion-label>Meine Zeiterfassungen</ion-label>
+        </ion-item>
+      </ion-list>
+    </ion-content>
+
+    <ion-item button (click)="logout()">
+      <ion-label>Abmelden</ion-label>
+    </ion-item>
+  </ion-menu>
+  
+  <ion-router-outlet id="child-content"></ion-router-outlet>
+</ion-split-pane>

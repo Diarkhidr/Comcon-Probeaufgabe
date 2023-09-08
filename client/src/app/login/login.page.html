@@ -1,0 +1,32 @@
+<ion-content>
+  <div class="center">
+
+      <!-- <img src="./assets/images/loginheader.jpg" /> -->
+      <ion-card-header>
+        <ion-card-subtitle>com:con tiimer</ion-card-subtitle>
+        <ion-card-title>Anmelden</ion-card-title>
+      </ion-card-header>
+      <form [formGroup]="loginForm" (keydown)="onKeyDown($event)" (ngSubmit)="onSubmit()">
+      <ion-list>
+        <ion-item>
+          <ion-label position="stacked">Service Url:</ion-label>
+          <ion-input autocomplete="off" autofocus="true" formControlName="url"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label position="stacked">Benutzername</ion-label>
+          <ion-input autocomplete="off" autofocus="true" formControlName="username"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label position="stacked">Passwort</ion-label>
+          <ion-input autocomplete="off" type="password" formControlName="password"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label>Angemeldet bleiben</ion-label>
+          <ion-checkbox slot="start" formControlName="stayLoggedIn"></ion-checkbox>
+        </ion-item>
+      </ion-list>
+      <ion-button expand="block" color="primary" type="submit">Anmelden</ion-button>
+    </form>
+
+  </div>
+</ion-content>
